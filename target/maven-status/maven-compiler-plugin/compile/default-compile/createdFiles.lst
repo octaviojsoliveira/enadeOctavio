@@ -1,0 +1,5 @@
+com\mycompany\enade\dao\ProvaQuestaoDao.class
+com\mycompany\enade\model\Provaquestao.class
+com\mycompany\enade\converter\ProvaalunoConverter.class
+com\mycompany\enade\model\Provaquestao_.class
+com\mycompany\enade\bean\ProvaQuestaoBean.class

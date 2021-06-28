@@ -1,0 +1,65 @@
+<ui:composition template="/WEB-INF/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Usuários</h2>
+        <br/>
+        <h:form id="formPrincipal">
+            <div align="center">
+                <p:dataTable var="lista" value="#{usuarioBean.alunos}"
+                             id="tabelaAgent" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+
+                    <p:column headerText="Código" sortBy="#{lista.idUsuario}" filterBy="#{lista.idUsuario}">
+                        <h:outputText value="#{lista.idUsuario}" />
+                    </p:column>
+                    
+                    <p:column headerText="Nome" sortBy="#{lista.nomeUsuario}" filterBy="#{lista.nomeUsuario}">
+                        <h:outputText value="#{lista.nomeUsuario}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </div>
+            <br/>
+            
+            <div align="center">
+                <h3>Exportar dados da página</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabelaAgent" fileName="alunos" postProcessor="#{usuarioBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabelaAgent" fileName="aluno" preProcessor="#{usuarioBean.preProcessPDF}" />
+                </h:commandLink>
+                
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabelaAgent" fileName="alunos" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabelaAgent" fileName="alunos" />
+                </h:commandLink>
+            </div>
+            
+            <div align="center">
+                <p:commandButton id="Relatorio" ajax="false" value="Gerar Relatório" 
+                                 action="#{usuarioBean.gerarRelatorio()}" onclick="this.form.target = '_blank'" />
+            </div>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>  
+
+        </h:form>
+    </ui:define>
+</ui:composition>
